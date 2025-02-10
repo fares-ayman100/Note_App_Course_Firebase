@@ -18,6 +18,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController password = TextEditingController();
   final TextEditingController username = TextEditingController();
   bool isvisibelP = true;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -191,3 +192,4 @@ class _SignUpState extends State<SignUp> {
     );
   }
 }
+
