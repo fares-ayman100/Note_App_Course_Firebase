@@ -16,16 +16,30 @@ class _AddCategoryState extends State<AddCategory> {
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
   CollectionReference categories =
       FirebaseFirestore.instance.collection('categories');
+  bool isLoading = false;
+
   AddCategory() async {
     if (formstate.currentState!.validate()) {
       try {
+        isLoading = true;
+        setState(() {});
         DocumentReference response = await categories.add(
             {'name': name.text, 'id': FirebaseAuth.instance.currentUser!.uid});
-        Navigator.of(context).pushReplacementNamed('homePage');
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('homePage', (Route) => false);
       } catch (e) {
+        isLoading = false;
+        setState(() {});
         print(e);
       }
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    name.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,27 +50,32 @@ class _AddCategoryState extends State<AddCategory> {
       ),
       body: Form(
         key: formstate,
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
-              child: Customtextformadd(
-                  label: 'Enter Name',
-                  controler: name,
-                  validator: (val) {
-                    if (val == '') {
-                      return 'Can\'t to be Empty';
-                    }
-                    return null;
-                  }),
-            ),
-            CustomMaterialButton(
-                onpressed: () {
-                  AddCategory();
-                },
-                title: 'Add')
-          ],
-        ),
+        child: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 25),
+                    child: Customtextformadd(
+                        label: 'Enter Name',
+                        controler: name,
+                        validator: (val) {
+                          if (val == '') {
+                            return 'Can\'t to be Empty';
+                          }
+                          return null;
+                        }),
+                  ),
+                  CustomMaterialButton(
+                      onpressed: () {
+                        AddCategory();
+                      },
+                      title: 'Add')
+                ],
+              ),
       ),
     );
   }
