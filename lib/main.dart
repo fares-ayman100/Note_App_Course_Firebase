@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app_firebase/Const/const.dart';
 import 'package:notes_app_firebase/Views/Auth/LoginPage.dart';
 import 'package:notes_app_firebase/Views/Auth/SignUp.dart';
 import 'package:notes_app_firebase/Views/HomePage.dart';
 import 'package:notes_app_firebase/Views/category/add.dart';
+import 'package:notes_app_firebase/filter.dart';
 import 'package:notes_app_firebase/firebase_options.dart';
 
 void main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -40,17 +41,18 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-            backgroundColor: Color(0xffFFA56F),
+        appBarTheme:  AppBarTheme(
+            backgroundColor: kprimarycolor,
             titleTextStyle:
-                TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            iconTheme: IconThemeData(color: Colors.white, size: 30)),
+                const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            iconTheme: const IconThemeData(color: Colors.white, size: 30)),
       ),
       debugShowCheckedModeBanner: false,
-      home: FirebaseAuth.instance.currentUser != null &&
-              FirebaseAuth.instance.currentUser!.emailVerified
-          ? const HomePage()
-          : const LoginPage(),
+      home: const FilterPage(),
+      // FirebaseAuth.instance.currentUser != null &&
+      //         FirebaseAuth.instance.currentUser!.emailVerified
+      //     ? const HomePage()
+      //     : const LoginPage(),
       routes: {
         'signUp': (context) => const SignUp(),
         'Login': (context) => const LoginPage(),

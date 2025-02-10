@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:notes_app_firebase/Const/const.dart';
 import 'package:notes_app_firebase/Views/Category/edit.dart';
 import 'package:notes_app_firebase/Views/Note/view.dart';
 
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xffFFA56F),
+        backgroundColor: kprimarycolor,
         onPressed: () {
           Navigator.of(context).pushNamed('addPage');
         },

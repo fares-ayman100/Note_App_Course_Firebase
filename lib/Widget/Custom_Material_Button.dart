@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app_firebase/Const/const.dart';
 
 class CustomMaterialButton extends StatelessWidget {
   const CustomMaterialButton({
@@ -19,7 +20,7 @@ class CustomMaterialButton extends StatelessWidget {
         width: 180,
         height: 60,
         child: MaterialButton(
-          color: const Color(0xffFFA56F),
+          color: kprimarycolor,
           onPressed: onpressed,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(60),

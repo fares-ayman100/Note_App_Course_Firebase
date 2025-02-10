@@ -16,7 +16,7 @@ class CustomLogo extends StatelessWidget {
           borderRadius: BorderRadius.circular(80),
         ),
         child: Image.asset(
-          'assets/notes.png',
+          'assets/notePageIcon.png',
           fit: BoxFit.cover,
         ),
       ),
