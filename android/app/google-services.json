@@ -12,7 +12,12 @@
           "package_name": "com.example.notes_app_firebase"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "265699502513-4dku65237iq0bmmtror1qjct6vbd8gll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB8KvwVAqgzB3T3VwdZhQHAd-SWDVB5ZqY"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265699502513-4dku65237iq0bmmtror1qjct6vbd8gll.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "265699502513-gmvbui5v7kpp7gsttsvkfhsguu2qo1va.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.notesAppFirebase"
+              }
+            }
+          ]
         }
       }
     }
