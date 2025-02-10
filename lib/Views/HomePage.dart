@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:notes_app_firebase/Views/Category/edit.dart';
+import 'package:notes_app_firebase/Views/Note/view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,8 +17,10 @@ class _HomePageState extends State<HomePage> {
   bool isLoading = true;
   List data = [];
   getData() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('categories').where('id',isEqualTo: FirebaseAuth.instance.currentUser!.uid).get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('categories')
+        .where('id', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
     data.addAll(querySnapshot.docs);
     isLoading = false;
     setState(() {});
@@ -77,23 +81,39 @@ class _HomePageState extends State<HomePage> {
                     crossAxisCount: 2, mainAxisExtent: 200),
                 itemBuilder: (context, index) {
                   return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              NoteView(categoryId: data[index].id),
+                        ),
+                      );
+                    },
                     onLongPress: () {
                       AwesomeDialog(
                           context: context,
                           dialogType: DialogType.warning,
                           animType: AnimType.rightSlide,
                           title: 'Error',
-                          desc: 'Are you sure you want to delete this item?',
-                          btnOkOnPress: () async {
+                          desc: 'Choose Edit Or Delete',
+                          btnCancelText: 'Delete',
+                          btnOkText: 'Edit',
+                          btnOkOnPress: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => EditCategory(
+                                    oldName: data[index]['name'],
+                                    docId: data[index].id),
+                              ),
+                            );
+                          },
+                          btnCancelOnPress: () async {
                             await FirebaseFirestore.instance
                                 .collection('categories')
                                 .doc(data[index].id)
                                 .delete();
                             Navigator.of(context)
                                 .pushReplacementNamed('homePage');
-                          },
-                          btnCancelOnPress: () {
-                            print('Cancel');
                           }).show();
                     },
                     child: Card(
