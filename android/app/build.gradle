@@ -48,3 +48,9 @@ android {
 flutter {
     source = "../.."
 }
+dependencies {
+    // المكتبات الخاصة بـ Firebase Authentication و Google Sign-In
+    implementation 'com.google.firebase:firebase-auth:21.0.8' // تأكد من أحدث نسخة
+    implementation 'com.google.android.gms:play-services-auth:20.1.0' // تأكد من أحدث نسخة
+
+}
