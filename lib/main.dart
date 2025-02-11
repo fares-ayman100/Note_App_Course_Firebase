@@ -41,23 +41,24 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        appBarTheme:  AppBarTheme(
+        appBarTheme: AppBarTheme(
             backgroundColor: kprimarycolor,
             titleTextStyle:
                 const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             iconTheme: const IconThemeData(color: Colors.white, size: 30)),
       ),
       debugShowCheckedModeBanner: false,
-      home: const FilterPage(),
-      // FirebaseAuth.instance.currentUser != null &&
-      //         FirebaseAuth.instance.currentUser!.emailVerified
-      //     ? const HomePage()
-      //     : const LoginPage(),
+      home: //const FilterPage(),
+          FirebaseAuth.instance.currentUser != null &&
+                  FirebaseAuth.instance.currentUser!.emailVerified
+              ? const HomePage()
+              : const LoginPage(),
       routes: {
         'signUp': (context) => const SignUp(),
         'Login': (context) => const LoginPage(),
         'homePage': (context) => const HomePage(),
         'addPage': (context) => const AddCategory(),
+        'filterPage': (context) => const FilterPage()
       },
     );
   }

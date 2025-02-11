@@ -10,48 +10,95 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-  List<QueryDocumentSnapshot> data = [];
-  initialData() async {
-    CollectionReference users = FirebaseFirestore.instance.collection("users");
-    QuerySnapshot usersdata = await users.where("age", isGreaterThan: 15).get();
-    //whereIn[15,40,13]
-    //IsEqualTo:40
-    //orderBy("age",desecending=false)
-    //limit(2)
-    for (var element in usersdata.docs) {
-      data.add(element);
-    }
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    initialData();
-    super.initState();
-  }
+  final Stream<QuerySnapshot> usersStream =
+      FirebaseFirestore.instance.collection('users').snapshots();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kprimarycolor,
+        onPressed: () {
+          CollectionReference users =
+              FirebaseFirestore.instance.collection('users');
+          DocumentReference doc1 =
+              FirebaseFirestore.instance.collection('users').doc("1");
+          DocumentReference doc2 =
+              FirebaseFirestore.instance.collection('users').doc("2");
+          DocumentReference doc3 =
+              FirebaseFirestore.instance.collection('users').doc("3");
+          WriteBatch batch = FirebaseFirestore.instance.batch();
+          batch.set(doc1, {'username': 'Mohamed', 'age': 15, 'money': 500});
+          batch.set(doc2, {'username': 'Kareem', 'age': 21, 'money': 450});
+          batch.set(doc3, {'username': 'Ameen', 'age': 60, 'money': 50});
+          batch.commit();
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
       appBar: AppBar(
         title: const Text(
           'Filter',
           style: TextStyle(fontSize: 35),
         ),
       ),
-      body: ListView.builder(
-        itemCount: data.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              subtitle: Text("age :${data[index]["age"]}"),
-              title: Text(
-                data[index]["username"],
-                style: const TextStyle(fontSize: 35),
-              ),
-            ),
-          );
-        },
+      body: Container(
+        padding: const EdgeInsets.all(10),
+        child: StreamBuilder(
+          stream: usersStream,
+          builder: (context, AsyncSnapshot<QuerySnapshot> Snapshot) {
+            if (Snapshot.hasError) {
+              return const Text('Error');
+            } else if (Snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return ListView.builder(
+                itemCount: Snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      DocumentReference documentReference = FirebaseFirestore
+                          .instance
+                          .collection('users')
+                          .doc(Snapshot.data!.docs[index].id);
+                      FirebaseFirestore.instance.runTransaction(
+                        (transaction) async {
+                          DocumentSnapshot snapshot =
+                              await transaction.get(documentReference);
+                          if (snapshot.exists) {
+                            var snapShotData = snapshot.data();
+                            if (snapShotData is Map<String, dynamic>) {
+                              int money = snapShotData['money'] + 100;
+                              transaction
+                                  .update(documentReference, {"money": money});
+                            }
+                          }
+                        },
+                      );
+                    },
+                    child: Card(
+                      child: ListTile(
+                        trailing: Text(
+                          '${Snapshot.data!.docs[index]['money']}\$',
+                          style:
+                              const TextStyle(color: Colors.red, fontSize: 30),
+                        ),
+                        subtitle: Text(
+                          "age :${Snapshot.data!.docs[index]["age"]}",
+                          style: const TextStyle(fontSize: 25),
+                        ),
+                        title: Text(
+                          Snapshot.data!.docs[index]["username"],
+                          style: const TextStyle(fontSize: 35),
+                        ),
+                      ),
+                    ),
+                  );
+                });
+          },
+        ),
       ),
     );
   }

@@ -36,24 +36,23 @@ class _EditCategoryState extends State<EditCategory> {
     }
   }
 
-  
   @override
   void initState() {
     name.text = widget.oldName;
     super.initState();
   }
+
   @override
   void dispose() {
     name.dispose();
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Category'),
+        title: const Text('Edit Category'),
       ),
       body: Form(
         key: formstate,

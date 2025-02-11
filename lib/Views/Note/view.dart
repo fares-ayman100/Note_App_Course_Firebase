@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:notes_app_firebase/Const/const.dart';
 import 'package:notes_app_firebase/Views/Note/add.dart';
 import 'package:notes_app_firebase/Views/Note/edit.dart';
 
@@ -39,7 +40,7 @@ class _NoteViewState extends State<NoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xffFFA56F),
+        backgroundColor: kprimarycolor,
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -49,7 +50,7 @@ class _NoteViewState extends State<NoteView> {
         },
         child: const Icon(
           Icons.add,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
       appBar: AppBar(
@@ -128,7 +129,12 @@ class _NoteViewState extends State<NoteView> {
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           child: Column(
-                            children: [Text('${data[index]['note']}')],
+                            children: [
+                              Text(
+                                '${data[index]['note']}',
+                                style: const TextStyle(fontSize: 30),
+                              )
+                            ],
                           ),
                         ),
                       ),

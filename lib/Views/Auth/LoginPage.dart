@@ -75,16 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                           height: 10,
                         ),
                         const Text(
-                          'Login to continue using the app',
-                          style: TextStyle(fontSize: 22, color: Colors.grey),
-                        ),
-                        Container(
-                          height: 10,
-                        ),
-                        const Text(
                           'Email',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500),
+                              fontSize: 22, fontWeight: FontWeight.w500),
                         ),
                         Container(
                           height: 10,
@@ -106,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                         const Text(
                           'Password',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500),
+                              fontSize: 22, fontWeight: FontWeight.w500),
                         ),
                         Container(
                           height: 10,
@@ -179,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                                 'Forgot Password?',
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 20,
                                   color: Colors.blue,
                                 ),
                               ),
@@ -266,6 +259,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             'OR Login with',
                             textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 18),
                           ),
                         ),
                         Container(

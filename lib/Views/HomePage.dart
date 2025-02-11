@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         },
         child: const Icon(
           Icons.add,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
       appBar: AppBar(
